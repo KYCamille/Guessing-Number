@@ -54,16 +54,17 @@
     const userGuess = parseInt(guessField.value);
     console.log("userGuess: " + userGuess);
 
-    if (sum === 5){
+    if (sum === 5){   
     message.textContent =
         "You Failed! 答案是 "+targetNumber;
-    guessSubmit = disabled;
-	}
+    guessSubmit.disabled = true;
+    setTimeout(playMore, 5000);
+    }
      else if (userGuess === targetNumber) {
       message.textContent =
         `恭喜你，你猜對了！` + "你這次猜了" + sum + "次哦～";
       message.style.color = "green";
-      guessSubmit.disabled = true;
+     guessSubmit.disabled = true;
     } else if (userGuess < targetNumber) {
       message.textContent = "太小了，再試一次。";
       message.style.color = "red";
