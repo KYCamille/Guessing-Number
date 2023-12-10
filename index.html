@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+
+<head>
+  <title>猜數字遊戲</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <h1>猜數字遊戲</h1>
+  <p>1 到 100 之間的數字，你猜是多少？</p>
+  <button id="answer">揭曉答案</button>
+  <br>
+  <input type="text" id="guessField" />
+  <input type="submit" value="猜!" id="guessSubmit" />
+  <button id="playAgain">再玩一次</button><br>
+  <p class="message"></p>
+</body>
+<script>
+  // Random number
+  let targetNumber = Math.floor(Math.random() * 100) + 1;
+  console.log("answer: " + targetNumber);
+
+  // Get element
+  const guessField = document.getElementById("guessField");
+  let guessSubmit = document.getElementById("guessSubmit");
+  let message = document.querySelector(".message");
+  let answer = document.getElementById("answer");  
+  let playAgain = document.getElementById("playAgain");
+
+  // Event listener
+  guessSubmit.addEventListener("click", checkGuess);
+  answer.addEventListener("click", tellAnswer);
+  playAgain.addEventListener("click", playMore);
+  
+  //Answer
+  function tellAnswer(){
+  answer.textContent = targetNumber;
+  }
+
+  //Change the answer and play onece again
+  function playMore(){
+  targetNumber = Math.floor(Math.random() * 100) + 1;
+  sum = 1;
+  guessSubmit.disabled = false;
+  answer.textContent = "揭曉答案";
+  message.textContent = "";
+  }
+
+  // Guess function
+  let sum = 1;
+ 
+  function checkGuess() {
+    const userGuess = parseInt(guessField.value);
+    console.log("userGuess: " + userGuess);
+
+    if (sum === 5){
+    message.textContent =
+        "You Failed! 答案是 "+targetNumber;
+    guessSubmit = disabled;
+	}
+     else if (userGuess === targetNumber) {
+      message.textContent =
+        `恭喜你，你猜對了！` + "你這次猜了" + sum + "次哦～";
+      message.style.color = "green";
+      guessSubmit.disabled = true;
+    } else if (userGuess < targetNumber) {
+      message.textContent = "太小了，再試一次。";
+      message.style.color = "red";
+      sum = sum + 1;
+
+    } else {
+      message.textContent = "太大了，再試一次。";
+      message.style.color = "red";
+      sum = sum + 1;
+    }
+
+    guessField.value = "";
+    guessField.focus();
+  }
+</script>
+
+</html>
+
