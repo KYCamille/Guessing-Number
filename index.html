@@ -15,6 +15,7 @@
   <input type="submit" value="猜!" id="guessSubmit" />
   <button id="playAgain">再玩一次</button><br>
   <p class="message"></p>
+  <p class="second"></p>
 </body>
 <script>
   // Random number
@@ -27,12 +28,13 @@
   let message = document.querySelector(".message");
   let answer = document.getElementById("answer");  
   let playAgain = document.getElementById("playAgain");
-
+  let second = document.querySelector(".second");
+  
   // Event listener
   guessSubmit.addEventListener("click", checkGuess);
   answer.addEventListener("click", tellAnswer);
-  playAgain.addEventListener("click", playMore);
-  
+  playAgain.addEventListener("click", playMore);  
+
   //Answer
   function tellAnswer(){
   answer.textContent = targetNumber;
@@ -45,6 +47,15 @@
   guessSubmit.disabled = false;
   answer.textContent = "揭曉答案";
   message.textContent = "";
+  second.textContent = "";
+  }
+
+  //Count from 5 to 1 second
+  function display(a){
+   second.textContent = "倒數 "+a+" 秒後重新開始～";
+  }
+  function delayedDisplay(a,b,callback) {
+   setTimeout(() => {callback(a);}, b);
   }
 
   // Guess function
@@ -58,9 +69,14 @@
     message.textContent =
         "You Failed! 答案是 "+targetNumber;
     guessSubmit.disabled = true;
+    delayedDisplay("5", 0, display);
+    delayedDisplay("4", 1000, display);
+    delayedDisplay("3", 2000, display);
+    delayedDisplay("2", 3000, display);
+    delayedDisplay("1", 4000, display);
     setTimeout(playMore, 5000);
-    }
-     else if (userGuess === targetNumber) {
+
+    }else if (userGuess === targetNumber) {
       message.textContent =
         `恭喜你，你猜對了！` + "你這次猜了" + sum + "次哦～";
       message.style.color = "green";
@@ -82,4 +98,3 @@
 </script>
 
 </html>
-
